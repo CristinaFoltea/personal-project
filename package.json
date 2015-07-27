@@ -16,6 +16,7 @@
     "monk": "^1.0.1",
     "morgan": "~1.6.1",
     "passport": "^0.2.2",
+    "passport-twitter": "^1.0.3",
     "sabre-dev-studio": "^1.0.2",
     "serve-favicon": "~2.3.0",
     "unirest": "^0.4.2"
