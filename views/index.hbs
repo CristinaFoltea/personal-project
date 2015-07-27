@@ -1,2 +1,19 @@
-<h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
+
+<maine>
+  <form action="/places" method='get'>
+    <p>
+      <input type="text" name="origin" id="autocomplete" placeholder="Enter a location">
+    </p>
+    <p>
+      <input type="text" name="departuredate" id="start" placeholder="Start Date">
+    </p>
+    <p>
+      <input type="text" name="returndate" id="end" placeholder="end Date">
+    </p>
+    <p>
+      <input type="number" name="maxfare" placeholder="Your buget">
+    </p>
+    <input type="submit" value="Find Destinations">
+  </form>
+  <p>hello {{ name }}</p>
+</main>
