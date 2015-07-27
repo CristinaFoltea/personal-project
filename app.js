@@ -24,7 +24,7 @@ passport.deserializeUser(function(obj, done) {
 passport.use(new TwitterStrategy({
     consumerKey: process.env.TWITTER_CONSUMER_KEY,
     consumerSecret: process.env.TWITTER_CONSUMER_SECRET,
-    callbackURL: process.env.HOST + "auth/twitter/callback",
+    callbackURL: process.env.HOST + "/auth/twitter/callback",
     scope: ['r_emailaddress', 'r_basicprofile'],
     state: true
   },
