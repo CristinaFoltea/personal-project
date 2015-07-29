@@ -15,11 +15,11 @@
         <input type="number" name="maxfare" placeholder="Your buget">
       <input type="submit" class="button" value="Find Destinations">
     </form>
+		{{#if message}}
+				<div class="error">
+					{{message}}
+					<a href="/">OK</a>
+				</div>
+		{{/if}}
   </section>
-  {{#if message}}
-      <div id="message" class="cd-popup-container">
-      	{{message}}
-				<a id="cancel-pop-up" href="#">OK</a>
-      </div>
-  {{/if}}
 </main>
