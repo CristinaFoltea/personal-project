@@ -1,0 +1,15 @@
+.visible {
+opacity: 1;
+visibility: visible;
+transition: opacity 0.3s 0s, visibility 0s 0s;
+}
+
+.cd-popup-container {
+transform: translateY(-40px);
+transition-property: transform;
+transition-duration: 0.3s;
+}
+
+.visible .cd-popup-container {
+transform: translateY(0);
+}

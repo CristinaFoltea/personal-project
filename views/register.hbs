@@ -1,0 +1,23 @@
+<main class="bg">
+  <section class="input-form">
+    <form action="/auth/register" method="post">
+      <p>
+        <input type="text" id="fullName" name="fullName" placeholder="Full Name">
+      </p>
+      <p>
+        <input type="email" id="email" name="email" placeholder="Email">
+      </p>
+      <p>
+        <input type="password" name="password" id="password" placeholder="Password">
+      </p>
+      <p>
+        <input type="submit" value="Register">
+      </p>
+    </form>
+    {{#if message}}
+    <div>
+      {{message}}
+    </div>
+    {{/if}}
+  </section>
+</main>

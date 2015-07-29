@@ -1,0 +1,23 @@
+<main class="bg">
+  <section class="input-form">
+    <form action="/auth/login" method="post">
+      <p>
+        <input type="email" id="email" name="email" placeholder="email">
+      </p>
+      <p>
+        <input type="password" name="password" id="password" placeholder="password">
+      </p>
+      <p>
+        <input type="submit" value="LOG IN">
+      </p>
+      <p>
+        You don't have an account? <a href="/auth/register"><strong>Register Here</strong></a>
+      </p>
+    </form>
+    {{#if message}}
+    <div>
+      {{message}}
+    </div>
+    {{/if}}
+  </section>
+</main>

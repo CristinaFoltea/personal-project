@@ -1,0 +1,58 @@
+main.bg {
+  background: url('/images/5.jpg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  min-height: 100%;
+  min-width: 1024px;
+  width: 100%;
+  height: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+main {
+  padding: 15px;
+}
+
+.input-form {
+  position: relative;
+  width: 49.6%;
+  height: 332px;
+  border-radius: 10px 10px;
+  padding: 27px 27px;
+  background: rgba(255, 255, 255, 0.2);
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 75px;
+  z-index: 1;
+}
+
+.instagram {
+  margin-top: 75px;
+  margin-left: 3%;
+}
+
+ article.city-list {
+   margin-top: 75px;
+   border-radius: 15px;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 50px;
+    .title {
+      text-transform: uppercase;
+    }
+     span{
+       display: inline-block;
+       width: 24%;
+       padding: 5px 10px;
+     }
+    form {
+      display: inline-block;
+    }
+    a.insta {
+      display: inline-block;
+      padding-left: 12%;
+    }
+}

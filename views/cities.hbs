@@ -1,0 +1,20 @@
+
+<main class="bg">
+  <article class='city-list'>
+        <div class="title">
+          <span class="city_name">Destination</span>
+          <span class="price">Price</span>
+          <span class="save">Save</span>
+          <span class='insta'>See Instagram</span>
+        </div>
+    {{#results}}
+        <span class="city_name">{{city}}</span>
+        <span class="price">${{price}}</span>
+        <form action="/places" method="post">
+          <button type="button" name="button" class="save" id={{city}}> +Add To Bucket List</button>
+        </form>
+        <a href="/photos/{{city}}" class="button insta" id='{{code}}' target="_blank">See {{city}} on Instagram</a>
+        <p></p>
+    {{/results}}
+  </article>
+</main>

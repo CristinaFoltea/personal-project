@@ -39,6 +39,7 @@ var app = express();
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
+
 // uncomment after placing your favicon in /public
 // app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
@@ -49,7 +50,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 }, resave: true, saveUninitialized: true}))
 app.use(passport.initialize());
 app.use(passport.session());
-
+app.use(function (req, res, next) {
+  res.locals.user = req.user
+  next()
+})
 app.use('/', routes);
 app.use('/auth', auth);
 app.use('/users', users);
@@ -64,11 +68,6 @@ app.get('/auth/twitter/callback',
   function(req, res) {
     res.redirect('/');
   });
-
-  app.use(function (req, res, next) {
-    res.locals.user = req.user
-    next()
-  })
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

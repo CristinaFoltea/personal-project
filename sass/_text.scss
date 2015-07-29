@@ -1,0 +1,25 @@
+body {
+  font-family: 'Flama-Book';
+}
+
+
+a {
+  padding: 10px;
+  text-decoration: none;
+  color: black;
+  &:hover {
+    color: $blue;
+  }
+}
+
+header a, header p {
+  font-family: 'FlamaUltracondensed-Book';
+  letter-spacing: 0.04em;
+  font-size: 1.5em;
+  color: $blue;
+}
+
+input {
+  font-size: 1.2em;
+  font-family: 'Flama-Book';
+}

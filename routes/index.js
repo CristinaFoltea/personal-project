@@ -5,15 +5,14 @@ var router = express.Router();
 var SabreDevStudio = require('sabre-dev-studio');
 var db = require("monk")(process.env.MONGOLAB_URI);
 var destinations = db.get('destinations');
+var options = {};
 var sabreDevStudio = new SabreDevStudio({
   client_id:     process.env.SABRE_CLIENT_ID,
   client_secret: process.env.SABRE_SECRET,
   uri:           'https://api.test.sabre.com'
 });
-var options = {};
 
 
-/* GET home page. */
 router.get('/', function(req, res, next) {
   if(req.isAuthenticated()) {
     unirest.get('https://api.twitter.com/1.1/list/~:(id,num-connections,picture-url)')
@@ -28,62 +27,71 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/airport', function(req, res) {
-    unirest.get('http://iatacodes.org/api/v1/cities.json?api_key=' + process.env.IATA_KEY)
-      .end(function (response) {
-        response.body.response.forEach(function(value){
-          destinations.insert({ iata: value.code, city : value.name, country : value.country_code}, function(err, doc){
-            if (err) res.end('404')
-            res.end()
-          })
+  unirest.get('http://iatacodes.org/api/v1/cities.json?api_key=' + process.env.IATA_KEY)
+    .end(function (response) {
+      response.body.response.forEach(function(value){
+        destinations.insert({ iata: value.code, city : value.name, country : value.country_code}, function(err, doc){
+          if (err) res.end('404')
+          res.end()
         })
       })
-      .error(function(data, status){
-        console.log(data)
-      })
+    })
+    .error(function(data, status){
+      console.log(data)
+    })
 })
 
 
-router.get('/logout', function(req, res) {
-  req.session.destroy(function(err) {
-  res.redirect('/')
+router.get('/photos/:id', function(req, res) {
+  console.log(req.params.id)
+  unirest.get('https://api.instagram.com/v1/tags/' + req.params.id + '/media/recent?client_id=' + process.env.CLIENT_ID_INSTAGRAM)
+    .type('json')
+    .end(function (response) {
+      res.render('more', {photos : JSON.parse(response.raw_body).data})
+    })
 })
-})
+
+function getCity(dataArr, res){
+  var cityNameCollection = []
+  var completed = 0;
+  dataArr.forEach(function(city) {
+    unirest.get('http://iatacodes.org/api/v1/cities.json?api_key=' + process.env.IATA_KEY + "&code=" + city.DestinationLocation)
+      .end(function(response){
+        completed++
+        if(JSON.parse(response.raw_body).response.length > 0){
+          cityNameCollection.push({
+                city : JSON.parse(response.raw_body).response[0].name,
+                code : city.DestinationLocation,
+                price : city.LowestFare})
+          if (completed === dataArr.length) {
+            res.render('cities', { results : cityNameCollection}
+        )}
+        }
+  })
+})}
 
 function sabreCall(q, res) {
-sabreDevStudio.get(q, options, function(err, data) {
-  console.log(JSON.parse(data).FareInfo[0].LowestNonStopFare)
-  response(res, err, data);
-});
-}
-
-function response(res, err, data) {
-if (err) {
-  res.status(200).send({
-    'status': false,
-    'message': 'NO results matching your query',
-    'info': err
-  });
-} else {
-  res.status(200).send({
-    'status': true,
-    'message': 'Success',
-    'info': data
-  });
-}
+  sabreDevStudio.get(q, options, function(err, data) {
+    if (err) res.render('index', {message : 'Can\'t find results matching your query'})
+    else {
+      getCity(JSON.parse(data).FareInfo, res);
+  }})
 }
 
 router.get('/places', function(req,res) {
   origin = req.query.origin.split(',')
   destinations.findOne({city : origin[0]}, function(err, doc){
     if(err) console.log('can\'t find this data')
-    // code = doc.iata
-    // console.log(code)
-    console.log(doc.iata)
-    sabreCall('/v1/shop/flights/fares?origin=' + doc.iata +
-    '&departuredate=' + req.query.departuredate +
-    '&returndate=' + req.query.returndate +
-    '&maxfare=' + req.query.maxfare, res);
-    });
+    if (doc) {
+      sabreCall('/v1/shop/flights/fares?origin=' + doc.iata +
+                '&departuredate=' + req.query.departuredate +
+                '&returndate=' + req.query.returndate +
+                '&maxfare=' + req.query.maxfare, res);
+    } else {
+      res.end('We can\'t find an airoport matching your city')
+    }
+    })
   })
+
 
 module.exports = router;
