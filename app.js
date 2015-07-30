@@ -50,10 +50,21 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 }, resave: true, saveUninitialized: true}))
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(function (req, res, next) {
-  res.locals.user = req.user
+var setUserNameLocal = function (req, res, next) {
+  res.locals.user = req.cookies.user
   next()
-})
+}
+
+var checkAcces = function(req, res, next) {
+  if (req.cookies.user) {
+    next()
+  } else {
+    res.redirect('/login')
+  }
+}
+
+
+app.use(setUserNameLocal)
 app.use('/', routes);
 app.use('/auth', auth);
 app.use('/users', users);

@@ -7,14 +7,14 @@
           <span class="save">Save</span>
           <span class='insta'>See Instagram</span>
         </div>
-    {{#results}}
-        <span class="city_name">{{city}}</span>
-        <span class="price">${{price}}</span>
-        <form action="/places" method="post">
-          <button type="button" name="button" class="save" id={{city}}> +Add To Bucket List</button>
-        </form>
-        <a href="/photos/{{city}}" class="button insta" id='{{code}}' target="_blank">See {{city}} on Instagram</a>
-        <p></p>
-    {{/results}}
+        <div class="result">
+          {{#results}}
+              <span class="city_name">{{city}}</span>
+              <span class="price">${{price}}</span>
+              <button type="button" name="button">Save</button>
+              <a href="/photos/{{city}}" class="button insta" id='{{code}}' target="_blank">See {{city}} on Instagram</a>
+              <p class"break"> </p>
+          {{/results}}
+        </div>
   </article>
 </main>

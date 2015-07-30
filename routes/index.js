@@ -19,36 +19,12 @@ router.get('/', function(req, res, next) {
       .header('Authorization', 'Bearer ' + req.user.token)
       .header('x-li-format', 'json')
       .end(function (response) {
+        res.cookie('user', {displayName : req.user.displayName})
         res.render('index', { user : req.user});
       })
   } else {
     res.render('index', {});
   }
-});
-
-router.get('/airport', function(req, res) {
-  unirest.get('http://iatacodes.org/api/v1/cities.json?api_key=' + process.env.IATA_KEY)
-    .end(function (response) {
-      response.body.response.forEach(function(value){
-        destinations.insert({ iata: value.code, city : value.name, country : value.country_code}, function(err, doc){
-          if (err) res.end('404')
-          res.end()
-        })
-      })
-    })
-    .error(function(data, status){
-      console.log(data)
-    })
-})
-
-
-router.get('/photos/:id', function(req, res) {
-  console.log(req.params.id)
-  unirest.get('https://api.instagram.com/v1/tags/' + req.params.id + '/media/recent?client_id=' + process.env.CLIENT_ID_INSTAGRAM)
-    .type('json')
-    .end(function (response) {
-      res.render('more', {photos : JSON.parse(response.raw_body).data})
-    })
 })
 
 function getCity(dataArr, res){
@@ -90,8 +66,16 @@ router.get('/places', function(req,res) {
     } else {
       res.end('We can\'t find an airoport matching your city')
     }
+  })
+})
+
+
+router.get('/photos/:id', function(req, res) {
+  unirest.get('https://api.instagram.com/v1/tags/' + req.params.id + '/media/recent?client_id=' + process.env.CLIENT_ID_INSTAGRAM)
+    .type('json')
+    .end(function (response) {
+      res.render('more', {photos : JSON.parse(response.raw_body).data})
     })
   })
-
 
 module.exports = router;

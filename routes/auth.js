@@ -5,16 +5,11 @@ var bcrypt = require('bcryptjs');
 var db = require("monk")(process.env.MONGOLAB_URI);
 var users = db.get('users');
 
-router.use(function (req, res, next) {
-  res.locals.user = req.user
-  next()
-})
 
 router.get('/logout', function(req, res) {
-  req.session.destroy(function(err) {
-    if(err) res.end('404')
+  res.clearCookie('user')
+  res.clearCookie('email ')
   res.redirect('/')
-  })
 })
 
 router.get('/login', function(req, res){
@@ -29,7 +24,9 @@ router.post('/login', function(req, res, next) {
       return
     }
     if (bcrypt.compareSync(req.body.password, doc.password)) {
-        res.render('index', { user : { displayName : doc.fullName}})
+        res.cookie('user', {displayName : doc.fullName})
+        res.cookie('email', doc.email)
+        res.render('index')
       } else {
         res.render('login', {message : "Log in failed"})
      }
@@ -46,11 +43,16 @@ router.post('/register', function(req, res, next) {
         req.body.password = hash
         users.insert(req.body, function(err, doc) {
           if (err) res.send('something went wrong')
-          res.render('index', { user : { displayName : doc.fullName}})
+          res.cookie('user', {displayName : doc.fullName})
+          res.cookie('email', doc.email)
+          res.render('index')
         })
       })
     })
 })
 
-
+router.use(function (req, res, next) {
+  res.locals.user = req.user
+  next()
+})
 module.exports = router;
