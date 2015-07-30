@@ -11,7 +11,7 @@
           {{#results}}
               <span class="city_name">{{city}}</span>
               <span class="price">${{price}}</span>
-              <button type="button" name="button">Save</button>
+              <button type="button" id="button" onClick="save(this)">Save</button>
               <a href="/photos/{{city}}" class="button insta" id='{{code}}' target="_blank">See {{city}} on Instagram</a>
               <p class"break"> </p>
           {{/results}}

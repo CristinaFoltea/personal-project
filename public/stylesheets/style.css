@@ -451,14 +451,14 @@ input {
 
 input[name="origin"], input[type="submit"], input[name="maxfare"],
 input[name="fullName"], input[name="email"], input[name="password"] {
-  width: 640px; }
+  width: 100%; }
 
 input[type="submit"], button[type='button'] {
   height: 60px;
   border: none; }
 
 input[name="returndate"], input[name="departuredate"] {
-  width: 200px; }
+  width: 40%; }
 
 *:focus {
   outline: 0; }
