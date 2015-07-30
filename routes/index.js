@@ -48,7 +48,7 @@ function getCity(dataArr, res){
 
 function sabreCall(q, res) {
   sabreDevStudio.get(q, options, function(err, data) {
-    if (err) res.render('index', {message : 'Can\'t find results matching your query'})
+    if (err) res.render('index', {message : 'Can\'t find destinations for this price - destination combination'})
     else {
       getCity(JSON.parse(data).FareInfo, res);
   }})
@@ -64,7 +64,7 @@ router.get('/places', function(req,res) {
                 '&returndate=' + req.query.returndate +
                 '&maxfare=' + req.query.maxfare, res);
     } else {
-      res.end('We can\'t find an airoport matching your city')
+      res.render('index', {message : 'We can\'t find an airoport matching your city'})
     }
   })
 })
