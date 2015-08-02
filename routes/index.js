@@ -5,6 +5,7 @@ var router = express.Router();
 var SabreDevStudio = require('sabre-dev-studio');
 var db = require("monk")(process.env.MONGOLAB_URI);
 var destinations = db.get('destinations');
+var users = db.get('users');
 var options = {};
 var sabreDevStudio = new SabreDevStudio({
   client_id:     process.env.SABRE_CLIENT_ID,
@@ -19,6 +20,7 @@ router.get('/', function(req, res, next) {
       .header('Authorization', 'Bearer ' + req.user.token)
       .header('x-li-format', 'json')
       .end(function (response) {
+        console.log(response)
         res.cookie('user', {displayName : req.user.displayName})
         res.render('index', { user : req.user});
       })
@@ -42,7 +44,7 @@ function getCity(dataArr, res){
           if (completed === dataArr.length) {
             res.render('cities', { results : cityNameCollection}
         )}
-        }
+     }
   })
 })}
 
@@ -69,13 +71,29 @@ router.get('/places', function(req,res) {
   })
 })
 
+router.post('/save', function(req, res){
+
+})
 
 router.get('/photos/:id', function(req, res) {
-  unirest.get('https://api.instagram.com/v1/tags/' + req.params.id + '/media/recent?client_id=' + process.env.CLIENT_ID_INSTAGRAM)
+  destination = req.params.id.replace(/\s/g, '')
+  unirest.get('https://api.instagram.com/v1/tags/' + destination + '/media/recent?client_id=' + process.env.CLIENT_ID_INSTAGRAM)
     .type('json')
     .end(function (response) {
       res.render('more', {photos : JSON.parse(response.raw_body).data})
     })
   })
+
+router.get('/save/:id', function(req, res) {
+  if(res.locals.id){
+    users.update({_id : res.locals.id}, {$push : { bucketList : req.params.id }}, function(err, doc) {
+      if(err) res.end('error')
+      res.end()
+    })
+  }
+  else {
+    res.redirect('/auth/login')
+  }
+})
 
 module.exports = router;

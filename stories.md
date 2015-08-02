@@ -8,3 +8,32 @@
 7. Every row with destinations should have the location, price a 'save' button and 'see city on intagram' button
 8. The save button should save the city in the database for the user under a bucket list
 9. See city on instagram should take the user to a new page with the most recent post that have a specific city as tag.
+
+
+<!-- <span class="city_name">{{{trimCity city}}}</span>
+<span class="price">${{price}}</span>
+<button type="button" id="button" onClick="save(this)">Save</button>
+<a href="/photos/{{city}}" class="button insta" id='{{code}}' target="_blank">See {{city}} on Instagram</a>
+<p class"break"> </p> -->
+
+<!-- <table>
+  <tr>
+    <td class="city_name">
+      {{{city}}}
+    </td>
+    <td class="price">
+      ${{price}}
+    </td>
+    <td>
+      <button type="button" id="button" onClick="save(this)">Save</button>
+    </td>
+    <td>
+      <a href="/photos/{{city}}" class="button insta" id='{{code}}' target="_blank">See {{city}} on Instagram</a>
+    </td>
+  </tr>
+</table> -->
+
+<!-- Handlebars.registerHelper('trimCity', function(city) {
+    var trimCity = city.replace('%20', " ");
+    return new Handlebars.SafeString(trimCity)
+}); -->

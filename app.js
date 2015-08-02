@@ -11,7 +11,7 @@ var passport = require('passport');
 var TwitterStrategy = require('passport-twitter').Strategy;
 var routes = require('./routes/index');
 var users = require('./routes/users');
-var auth = require('./routes/auth');
+var auth = require('./routes/auth')
 
 passport.serializeUser(function(user, done) {
   done(null, user);
@@ -52,6 +52,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 var setUserNameLocal = function (req, res, next) {
   res.locals.user = req.cookies.user
+  res.locals.id = req.cookies.id
   next()
 }
 
@@ -62,7 +63,6 @@ var checkAcces = function(req, res, next) {
     res.redirect('/login')
   }
 }
-
 
 app.use(setUserNameLocal)
 app.use('/', routes);

@@ -10,6 +10,7 @@
       {{#if user}}
       <p>
         Hello {{user.displayName }}
+        <a href="/bucket"></a>
         |
         <a href="/auth/logout">Logout</a>
         |
@@ -29,6 +30,7 @@
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
     <script src="//code.jquery.com/jquery-1.10.2.js"></script>
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script src='/javascripts/app.js'></script>
     <script src='/javascripts/date.js'></script>
   </body>
 </html>

@@ -14,7 +14,7 @@ main.bg {
 }
 
 main {
-  padding: 15px;
+  padding: 1%;
 }
 
 .error {
@@ -35,13 +35,6 @@ main {
   }
 }
 
-.title {
-  font-size: 1.1em;
-  border-bottom: 1px solid black;
-  padding-bottom: 5px;
-  font-weight: bold;
-}
-
 .input-form {
   position: relative;
   width: 49.6%;
@@ -55,41 +48,61 @@ main {
   z-index: 1;
 }
 
-.instagram {
-  margin-top: 75px;
-  margin-left: 3.5%;
+section.instagram {
+  margin-top: 7%;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
  article.city-list {
-   margin-top: 75px;
+   margin-top: 7%;
    border-radius: 15px;
    background: rgba(255, 255, 255, 0.8);
    padding: 50px;
-    .title {
-      text-transform: uppercase;
-      padding-bottom: 10px;
-    }
-     span{
-       display: inline-block;
-       width: 24%;
-       padding: 5px 10px;
+   .title {
+     text-transform: uppercase;
+     font-size: 1.1em;
+     font-weight: bold;
+     td {
+       padding-bottom: 20px;
      }
+   }
+
+    table {
+       width: 100%;
+       td {
+         width: 25%;
+         height: 18%;
+         padding-left: 3%;
+         padding-top: 0.3%;
+         padding-bottom: 0.3%;
+       }
+       tr:nth-of-type(2n) {
+         background: rgba(54, 88, 92, 0.3);
+       }
+     }
+
     form {
       display: inline-block;
     }
     a.insta {
       display: inline-block;
-      padding-left: 15%;
-    }
-
-    .result {
-      padding-top: 10px;
+      margin-left: -3%;
     }
 
     button[type="button"] {
-      margin-left: -40px;
       border-radius: 5px;
+      margin-left: -18%;
       height: 30px;
-      width: 150px;
+      width: 50%;
+      font-size: 1em;
+      &:hover {
+        box-shadow: 1px 1px 4px grey;
+        color: grey;
+      }
+      &.saved {
+        background: $blue;
+      }
     }
 }

@@ -1,18 +1,20 @@
-function Orbit (){}
+function Orbit(){}
  Orbit.prototype.get = function (path, callback) {
   var res = new XMLHttpRequest()
-  res.open("post", path)
+  res.open("get", path)
   res.addEventListener('load', callback.bind(res, res))
   res.send()
   return res
   }
 
-  var orbit = new Orbit ()
-var usersRequest = orbit.post('/save', function() {
-  console.log(this.response);
-});
+var orbit = new Orbit()
 
 
-function save(e){
-
+function save(id){
+  orbit.get('/save/' + id, function() {
+    var input = document.getElementById(id)
+    console.log(input.innerHTML)
+    input.innerHTML = 'Saved'
+    input.classList.add('saved')
+  })
 }

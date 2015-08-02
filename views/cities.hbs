@@ -1,20 +1,23 @@
 
 <main class="bg">
   <article class='city-list'>
-        <div class="title">
-          <span class="city_name">Destination</span>
-          <span class="price">Price</span>
-          <span class="save">Save</span>
-          <span class='insta'>See Instagram</span>
-        </div>
-        <div class="result">
-          {{#results}}
-              <span class="city_name">{{city}}</span>
-              <span class="price">${{price}}</span>
-              <button type="button" id="button" onClick="save(this)">Save</button>
-              <a href="/photos/{{city}}" class="button insta" id='{{code}}' target="_blank">See {{city}} on Instagram</a>
-              <p class"break"> </p>
-          {{/results}}
-        </div>
+    <table>
+      <tr class="title">
+        <td>Destination</td>
+        <td>Price</td>
+        <td>Save</td>
+        <td>See Instagram</td>
+      </tr>
+    <div class="result">
+      {{#results}}
+          <tr>
+            <td class="city_name">{{city}}</td>
+            <td class="price">${{price}}</td>
+            <td><button type="button" id="{{city}}" onclick="save('{{city}}')">Save</button></td>
+            <td><a href="/photos/{{city}}" class="button insta" id='{{code}}' target="_blank">See {{city}} on Instagram</a></td>
+          </tr>
+      {{/results}}
+    </div>
+   </table>
   </article>
 </main>
