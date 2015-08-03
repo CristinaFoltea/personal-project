@@ -8,7 +8,8 @@ var express = require('express'),
 
 router.get('/logout', function(req, res) {
   res.clearCookie('user')
-  res.clearCookie('email ')
+  res.clearCookie('email')
+  req.session.destroy
   res.redirect('/')
 })
 
