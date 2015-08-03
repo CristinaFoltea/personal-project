@@ -1,9 +1,9 @@
-require('dotenv').load();
-var express = require('express');
-var router = express.Router();
-var bcrypt = require('bcryptjs');
-var db = require("monk")(process.env.MONGOLAB_URI);
-var users = db.get('users');
+require('dotenv').load()
+var express = require('express'),
+    router = express.Router(),
+    bcrypt = require('bcryptjs'),
+    db = require("monk")(process.env.MONGOLAB_URI),
+    users = db.get('users')
 
 
 router.get('/logout', function(req, res) {

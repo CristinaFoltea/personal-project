@@ -1,35 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang='en'>
   <head>
     <title>{{title}}</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <link rel='stylesheet' href='//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css'>
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css'>
   </head>
   <body>
     <header>
       {{#if user}}
       <p>
         Hello {{user.displayName }}
-        <a href="/bucket"></a>
+        <a class='awesome' href='#'><i  onclick='change(this)' class='fa fa-chevron-left'></i></a>
+        <a id='show' class='hide' href='/users/{{id}}'>See Bucket List</a>
         |
-        <a href="/auth/logout">Logout</a>
+        <a href='/auth/logout'>Logout</a>
         |
-        <a href="/">Home</a>
+        <a href='/'>Home</a>
       </p>
     {{else}}
       <p>
-        <a href="/auth/login">Log In</a>
+        <a href='/auth/login'>Log In</a>
         |
-        <a href="/auth/twitter">Login with Twitter</a>
+        <a href='/auth/twitter'>Login with Twitter</a>
         |
-        <a href="/">Home</a>
+        <a href='/'>Home</a>
       </p>
     {{/if}}
     </header>
     {{{body}}}
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
-    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script src='https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places'></script>
+    <script src='//code.jquery.com/jquery-1.10.2.js'></script>
+    <script src='//code.jquery.com/ui/1.11.4/jquery-ui.js'></script>
     <script src='/javascripts/app.js'></script>
     <script src='/javascripts/date.js'></script>
   </body>

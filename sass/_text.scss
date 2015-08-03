@@ -2,6 +2,9 @@ body {
   font-family: 'flamabook';
 }
 
+button {
+  font-family: 'flamabook';
+}
 
 a {
   padding: 10px;
@@ -12,11 +15,15 @@ a {
   }
 }
 
-header a, header p {
+header a, header p{
   font-family: 'flama_ultracondensedbook';
   letter-spacing: 0.04em;
   font-size: 1.5em;
   color: $blue;
+}
+
+header .hide, header .visible {
+  font-size: 1em;
 }
 
 input {

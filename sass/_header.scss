@@ -4,4 +4,32 @@ header {
   text-align: right;
   padding: 20px 30px;
   z-index: 1;
+  .awesome {
+    display: inline-block;
+    width: 2.5%;
+    font-size: 0.7em;
+    font-weight: bold;
+    color: white;
+  }
+
+  .awesome .fa-chevron-left {
+    color: $blue;
+  }
+
+  .hide, .visible {
+    position: absolute;
+    width: 10%;
+    top: 65%;
+    right: 16.3%;
+    border-top: 1px dotted white;
+    padding-right: 0px;
+    color: white;
+  }
+  .visible {
+    visibility: visible;
+  }
+
+  .hide {
+    visibility: hidden;
+  }
 }

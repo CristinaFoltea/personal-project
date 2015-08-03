@@ -336,6 +336,9 @@ body {
 body {
   font-family: 'flamabook'; }
 
+button {
+  font-family: 'flamabook'; }
+
 a {
   padding: 10px;
   text-decoration: none;
@@ -349,6 +352,9 @@ header a, header p {
   font-size: 1.5em;
   color: #4affff; }
 
+header .hide, header .visible {
+  font-size: 1em; }
+
 input {
   font-size: 1.2em;
   font-family: 'flamabook'; }
@@ -359,6 +365,26 @@ header {
   text-align: right;
   padding: 20px 30px;
   z-index: 1; }
+  header .awesome {
+    display: inline-block;
+    width: 2.5%;
+    font-size: 0.7em;
+    font-weight: bold;
+    color: white; }
+  header .awesome .fa-chevron-left {
+    color: #4affff; }
+  header .hide, header .visible {
+    position: absolute;
+    width: 10%;
+    top: 65%;
+    right: 16.3%;
+    border-top: 1px dotted white;
+    padding-right: 0px;
+    color: white; }
+  header .visible {
+    visibility: visible; }
+  header .hide {
+    visibility: hidden; }
 
 main.bg {
   background: url("/images/5.jpg") no-repeat center center fixed;
@@ -430,7 +456,7 @@ article.city-list {
       padding-top: 0.3%;
       padding-bottom: 0.3%; }
     article.city-list table tr:nth-of-type(2n) {
-      background: rgba(54, 88, 92, 0.3); }
+      background: rgba(180, 180, 180, 0.5); }
   article.city-list form {
     display: inline-block; }
   article.city-list a.insta {
@@ -441,12 +467,15 @@ article.city-list {
     margin-left: -18%;
     height: 30px;
     width: 50%;
-    font-size: 1em; }
+    font-size: 1em;
+    background: rgba(180, 180, 180, 0.5); }
     article.city-list button[type="button"]:hover {
-      box-shadow: 1px 1px 4px grey;
-      color: grey; }
+      background: #000;
+      color: #4affff; }
     article.city-list button[type="button"].saved {
       background: #4affff; }
+      article.city-list button[type="button"].saved:hover {
+        color: #000; }
 
 input {
   margin: 5px 5px;

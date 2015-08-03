@@ -79,7 +79,7 @@ section.instagram {
          padding-bottom: 0.3%;
        }
        tr:nth-of-type(2n) {
-         background: rgba(54, 88, 92, 0.3);
+         background: $grey;
        }
      }
 
@@ -97,12 +97,16 @@ section.instagram {
       height: 30px;
       width: 50%;
       font-size: 1em;
+      background: $grey;
       &:hover {
-        box-shadow: 1px 1px 4px grey;
-        color: grey;
+        background: #000;
+        color: $blue;
       }
       &.saved {
         background: $blue;
+        &:hover {
+          color: #000;
+        }
       }
     }
 }

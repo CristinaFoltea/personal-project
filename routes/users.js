@@ -1,9 +1,16 @@
-var express = require('express');
-var router = express.Router();
+var express = require('express'),
+    router = express.Router(),
+    db = require("monk")(process.env.MONGOLAB_URI),
+    users = db.get('users')
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+router.get('/:id', function(req, res, next) {
+  console.log(req.params.id)
+  users.findOne({_id : req.params.id}, function(err, doc) {
+    if(err) res.end('not found')
+    console.log(doc)
+    res.render('list', {list : doc.bucketList})
+  })
+})
 
 module.exports = router;
