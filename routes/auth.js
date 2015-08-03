@@ -7,9 +7,9 @@ var express = require('express'),
 
 
 router.get('/logout', function(req, res) {
-  res.clearCookie('user')
-  res.clearCookie('email')
-  req.session.destroy
+  res.clearCookie('user', {path : '/'})
+  res.clearCookie('id', {path : '/'})
+  req.logOut()
   res.redirect('/')
 })
 
@@ -27,7 +27,7 @@ router.post('/login', function(req, res, next) {
     if (bcrypt.compareSync(req.body.password, doc.password)) {
         res.cookie('user', {displayName : doc.fullName})
         res.cookie('id', doc._id)
-        res.render('index', {user :{displayName : doc.fullName}})
+        res.render('index', {user : {displayName : doc.fullName}, id : doc._id })
       } else {
         res.render('login', {message : "Log in failed"})
      }
@@ -47,7 +47,7 @@ router.post('/register', function(req, res, next) {
           if (err) res.send('something went wrong')
           res.cookie('user', {displayName : doc.fullName})
           res.cookie('id', doc._id)
-          res.render('index', {user :{displayName : doc.fullName}})
+          res.render('index', {user : {displayName : doc.fullName}, id : doc._id })
         })
       })
     })

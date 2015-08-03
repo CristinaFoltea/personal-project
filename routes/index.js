@@ -82,6 +82,7 @@ router.get('/photos/:id', function(req, res) {
   })
 
 router.get('/save/:id', function(req, res) {
+  console.log(res.locals.id)
   if(res.locals.id){
     users.update({_id : res.locals.id}, {$push : { bucketList : req.params.id }}, function(err, doc) {
       if(err) res.end('error')

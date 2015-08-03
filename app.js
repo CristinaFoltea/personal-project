@@ -1,17 +1,17 @@
 require('dotenv').load()
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var unirest = require('unirest');
-var session = require('express-session')
-var passport = require('passport');
-var TwitterStrategy = require('passport-twitter').Strategy;
-var routes = require('./routes/index');
-var users = require('./routes/users');
-var auth = require('./routes/auth')
+var express = require('express'),
+    path = require('path'),
+    favicon = require('serve-favicon'),
+    logger = require('morgan'),
+    cookieParser = require('cookie-parser'),
+    bodyParser = require('body-parser'),
+    unirest = require('unirest'),
+    session = require('express-session'),
+    passport = require('passport'),
+    TwitterStrategy = require('passport-twitter').Strategy,
+    routes = require('./routes/index'),
+    users = require('./routes/users'),
+    auth = require('./routes/auth')
 
 passport.serializeUser(function(user, done) {
   done(null, user);
@@ -50,6 +50,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 }, resave: true, saveUninitialized: true}))
 app.use(passport.initialize());
 app.use(passport.session());
+
 var setUserNameLocal = function (req, res, next) {
   res.locals.user = req.cookies.user
   res.locals.id = req.cookies.id
