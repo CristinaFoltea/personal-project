@@ -1,18 +1,17 @@
 require('dotenv').load()
-var express = require('express');
-var unirest = require('unirest');
-var router = express.Router();
-var SabreDevStudio = require('sabre-dev-studio');
-var db = require("monk")(process.env.MONGOLAB_URI);
-var destinations = db.get('destinations');
-var users = db.get('users');
-var options = {};
-var sabreDevStudio = new SabreDevStudio({
-  client_id:     process.env.SABRE_CLIENT_ID,
-  client_secret: process.env.SABRE_SECRET,
-  uri:           'https://api.test.sabre.com'
-});
-
+var express = require('express'),
+    unirest = require('unirest'),
+    router = express.Router(),
+    SabreDevStudio = require('sabre-dev-studio'),
+    db = require('monk')(process.env.MONGOLAB_URI),
+    destinations = db.get('destinations'),
+    users = db.get('users'),
+    options = {},
+    sabreDevStudio = new SabreDevStudio({
+      client_id:     process.env.SABRE_CLIENT_ID,
+      client_secret: process.env.SABRE_SECRET,
+      uri:           'https://api.test.sabre.com'
+    })
 
 router.get('/', function(req, res, next) {
   if(req.isAuthenticated()) {
@@ -25,34 +24,36 @@ router.get('/', function(req, res, next) {
         res.render('index', { user : req.user});
       })
   } else {
-    res.render('index', {});
+    res.render('index', {})
   }
 })
 
 function getCity(dataArr, res){
   var cityNameCollection = []
-  var completed = 0;
+  var completed = 0
   dataArr.forEach(function(city) {
-    unirest.get('http://iatacodes.org/api/v1/cities.json?api_key=' + process.env.IATA_KEY + "&code=" + city.DestinationLocation)
+    unirest.get('http://iatacodes.org/api/v1/cities.json?api_key=' + process.env.IATA_KEY + '&code=' + city.DestinationLocation)
       .end(function(response){
         completed++
         if(JSON.parse(response.raw_body).response.length > 0){
           cityNameCollection.push({
-                city : JSON.parse(response.raw_body).response[0].name,
-                code : city.DestinationLocation,
-                price : city.LowestFare})
-          if (completed === dataArr.length) {
-            res.render('cities', { results : cityNameCollection}
-        )}
-     }
-  })
-})}
+            city : JSON.parse(response.raw_body).response[0].name,
+            code : city.DestinationLocation,
+            price : city.LowestFare})
+            if (completed === dataArr.length) {
+              res.render('cities', { results : cityNameCollection}
+            )
+          }
+        }
+      })
+    })
+  }
 
 function sabreCall(q, res) {
   sabreDevStudio.get(q, options, function(err, data) {
-    if (err) res.render('index', {message : 'Can\'t find destinations for this price - destination combination'})
-    else {
-      getCity(JSON.parse(data).FareInfo, res);
+    if (err) {res.render('index', {message : 'Can\'t find destinations for this price - destination combination'})
+  } else {
+      getCity(JSON.parse(data).FareInfo, res)
   }})
 }
 
@@ -71,10 +72,6 @@ router.get('/places', function(req,res) {
   })
 })
 
-router.post('/save', function(req, res){
-
-})
-
 router.get('/photos/:id', function(req, res) {
   destination = req.params.id.replace(/\s/g, '')
   unirest.get('https://api.instagram.com/v1/tags/' + destination + '/media/recent?client_id=' + process.env.CLIENT_ID_INSTAGRAM)
@@ -90,10 +87,16 @@ router.get('/save/:id', function(req, res) {
       if(err) res.end('error')
       res.end()
     })
-  }
-  else {
+  } else {
     res.redirect('/auth/login')
   }
+})
+
+router.get('/delete/:id', function(req, res) {
+  users.update({_id : res.locals.id }, {$pull : {bucketList : req.params.id }}, function(err, doc) {
+    if(err) res.end('error')
+    res.redirect('/users/' + res.locals.id)
+  })
 })
 
 module.exports = router;

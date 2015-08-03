@@ -4,11 +4,10 @@ var express = require('express'),
     users = db.get('users')
 
 /* GET users listing. */
+
 router.get('/:id', function(req, res, next) {
-  console.log(req.params.id)
   users.findOne({_id : req.params.id}, function(err, doc) {
     if(err) res.end('not found')
-    console.log(doc)
     res.render('list', {list : doc.bucketList})
   })
 })

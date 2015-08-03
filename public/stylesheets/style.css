@@ -430,6 +430,56 @@ main {
   margin-top: 75px;
   z-index: 1; }
 
+article.list {
+  position: relative;
+  width: 50%;
+  border-radius: 10px 10px;
+  padding: 27px 27px;
+  background: rgba(255, 255, 255, 0.8); }
+  article.list td {
+    vertical-align: middle; }
+  article.list .button {
+    display: inline-block;
+    float: right;
+    margin: 5px 0;
+    text-align: center;
+    padding-top: 5px; }
+
+article {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 7%; }
+  article .title {
+    text-transform: uppercase;
+    font-size: 1.1em;
+    font-weight: bold; }
+    article .title td {
+      padding-bottom: 20px; }
+  article table {
+    width: 100%; }
+    article table td {
+      width: 25%;
+      height: 18%;
+      padding-left: 3%;
+      padding-top: 0.3%;
+      padding-bottom: 0.3%; }
+    article table tr:nth-of-type(2n) {
+      background: rgba(180, 180, 180, 0.5); }
+  article button[type="button"], article .button {
+    border-radius: 5px;
+    margin-left: -18%;
+    height: 30px;
+    width: 50%;
+    font-size: 1em;
+    background: rgba(180, 180, 180, 0.5); }
+    article button[type="button"]:hover, article .button:hover {
+      background: #000;
+      color: #4affff; }
+    article button[type="button"].saved, article .button.saved {
+      background: #4affff; }
+      article button[type="button"].saved:hover, article .button.saved:hover {
+        color: #000; }
+
 section.instagram {
   margin-top: 7%;
   width: 100%;
@@ -441,41 +491,11 @@ article.city-list {
   border-radius: 15px;
   background: rgba(255, 255, 255, 0.8);
   padding: 50px; }
-  article.city-list .title {
-    text-transform: uppercase;
-    font-size: 1.1em;
-    font-weight: bold; }
-    article.city-list .title td {
-      padding-bottom: 20px; }
-  article.city-list table {
-    width: 100%; }
-    article.city-list table td {
-      width: 25%;
-      height: 18%;
-      padding-left: 3%;
-      padding-top: 0.3%;
-      padding-bottom: 0.3%; }
-    article.city-list table tr:nth-of-type(2n) {
-      background: rgba(180, 180, 180, 0.5); }
   article.city-list form {
     display: inline-block; }
   article.city-list a.insta {
     display: inline-block;
     margin-left: -3%; }
-  article.city-list button[type="button"] {
-    border-radius: 5px;
-    margin-left: -18%;
-    height: 30px;
-    width: 50%;
-    font-size: 1em;
-    background: rgba(180, 180, 180, 0.5); }
-    article.city-list button[type="button"]:hover {
-      background: #000;
-      color: #4affff; }
-    article.city-list button[type="button"].saved {
-      background: #4affff; }
-      article.city-list button[type="button"].saved:hover {
-        color: #000; }
 
 input {
   margin: 5px 5px;

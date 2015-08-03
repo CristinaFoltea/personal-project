@@ -35,7 +35,7 @@ main {
   }
 }
 
-.input-form {
+.input-form{
   position: relative;
   width: 49.6%;
   height: 332px;
@@ -46,6 +46,70 @@ main {
   margin-right: auto;
   margin-top: 75px;
   z-index: 1;
+}
+
+ article.list {
+   position: relative;
+   width: 50%;
+   border-radius: 10px 10px;
+   padding: 27px 27px;
+   background: rgba(255, 255, 255, 0.8);
+   td {
+     vertical-align: middle;
+   }
+   .button {
+    display: inline-block;
+    float: right;
+    margin: 5px 0;
+    text-align: center;
+    padding-top: 5px;
+   }
+ }
+
+
+article {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 7%;
+  .title {
+    text-transform: uppercase;
+    font-size: 1.1em;
+    font-weight: bold;
+    td {
+      padding-bottom: 20px;
+    }
+  }
+  table {
+     width: 100%;
+     td {
+       width: 25%;
+       height: 18%;
+       padding-left: 3%;
+       padding-top: 0.3%;
+       padding-bottom: 0.3%;
+     }
+     tr:nth-of-type(2n) {
+       background: $grey;
+     }
+   }
+   button[type="button"], .button {
+     border-radius: 5px;
+     margin-left: -18%;
+     height: 30px;
+     width: 50%;
+     font-size: 1em;
+     background: $grey;
+     &:hover {
+       background: #000;
+       color: $blue;
+     }
+     &.saved {
+       background: $blue;
+       &:hover {
+         color: #000;
+       }
+     }
+   }
 }
 
 section.instagram {
@@ -60,53 +124,11 @@ section.instagram {
    border-radius: 15px;
    background: rgba(255, 255, 255, 0.8);
    padding: 50px;
-   .title {
-     text-transform: uppercase;
-     font-size: 1.1em;
-     font-weight: bold;
-     td {
-       padding-bottom: 20px;
-     }
-   }
-
-    table {
-       width: 100%;
-       td {
-         width: 25%;
-         height: 18%;
-         padding-left: 3%;
-         padding-top: 0.3%;
-         padding-bottom: 0.3%;
-       }
-       tr:nth-of-type(2n) {
-         background: $grey;
-       }
-     }
-
     form {
       display: inline-block;
     }
     a.insta {
       display: inline-block;
       margin-left: -3%;
-    }
-
-    button[type="button"] {
-      border-radius: 5px;
-      margin-left: -18%;
-      height: 30px;
-      width: 50%;
-      font-size: 1em;
-      background: $grey;
-      &:hover {
-        background: #000;
-        color: $blue;
-      }
-      &.saved {
-        background: $blue;
-        &:hover {
-          color: #000;
-        }
-      }
     }
 }

@@ -1,17 +1,20 @@
-<main class="bg">
-  <article class='city-list'>
+<main class='bg'>
+  <article class='list'>
     <table>
-      <tr class="title">
+      <tr class='title'>
         <td>
           my bucket list
         </td>
       </tr>
       {{#each list}}
-          <tr>
-            <td>
-              {{this}}
-            </td>
-          </tr>
+        <tr>
+          <td>
+            {{this}}
+          </td>
+          <td>
+            <a class="button" href='/delete/{{this}}'>Remove</a>
+          </td>
+        </tr>
       {{/each}}
    </table>
   </article>

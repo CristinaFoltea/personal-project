@@ -9,7 +9,6 @@ function Orbit(){}
 
 var orbit = new Orbit()
 
-
 function save(id){
   orbit.get('/save/' + id, function() {
     var input = document.getElementById(id)
