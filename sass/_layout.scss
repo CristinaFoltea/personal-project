@@ -15,6 +15,22 @@ main.bg {
 
 main {
   padding: 1%;
+  section.input-form {
+    position: relative;
+    width: 49.6%;
+    height: 332px;
+    border-radius: 10px 10px;
+    padding: 27px 27px;
+    background: rgba(255, 255, 255, 0.2);
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 4%;
+    z-index: 1;
+  }
+}
+
+.log section.input-form {
+  margin-top: 11%;
 }
 
 .error {
@@ -32,20 +48,10 @@ main {
   a {
     color: white;
     font-weight: bold;
+    &:hover {
+      color: $blue;
+    }
   }
-}
-
-.input-form{
-  position: relative;
-  width: 49.6%;
-  height: 332px;
-  border-radius: 10px 10px;
-  padding: 27px 27px;
-  background: rgba(255, 255, 255, 0.2);
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 75px;
-  z-index: 1;
 }
 
  article.list {
