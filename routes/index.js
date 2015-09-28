@@ -40,10 +40,7 @@ function getCity(dataArr, res){
             city : JSON.parse(response.raw_body).response[0].name,
             code : city.DestinationLocation,
             price : city.LowestFare})
-            if (completed === dataArr.length) {
-              res.render('cities', { results : cityNameCollection}
-            )
-          }
+            if (completed === dataArr.length) {res.render('cities', { results : cityNameCollection})}
         }
       })
     })
