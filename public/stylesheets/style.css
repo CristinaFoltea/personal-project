@@ -486,8 +486,8 @@ article {
 
 section.instagram {
   margin-top: 7%;
-  width: 100%;
-  margin-left: 3.5%; }
+  width: 100vw;
+  margin-left: 2.5vw; }
 
 article.city-list {
   margin-top: 7%;
@@ -565,7 +565,7 @@ input[name="returndate"], input[name="departuredate"] {
 input[type='submit'] {
   background: #4affff; }
 
-@media only screen and (min-device-width: 375px) and (max-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2) {
+@media (max-width: 720px) {
   .input-form {
-    width: 90%;
-    height: 50%; } }
+    width: 100vw;
+    height: 50vw; } }

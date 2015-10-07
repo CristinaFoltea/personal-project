@@ -24,7 +24,7 @@ router.post('/login', function(req, res, next) {
       res.render('login', {message : "Log in failed"})
       return
     }
-    if (bcrypt.compareSync(req.body.password, doc.password)) {
+     if (bcrypt.compareSync(req.body.password, doc.password)) {
         res.cookie('user', {displayName : doc.fullName})
         res.cookie('id', doc._id)
         res.render('index', {user : {displayName : doc.fullName}, id : doc._id })

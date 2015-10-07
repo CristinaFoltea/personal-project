@@ -1,5 +1,6 @@
 require('dotenv').load()
 var express = require('express'),
+    request = require('request'),
     unirest = require('unirest'),
     router = express.Router(),
     SabreDevStudio = require('sabre-dev-studio'),
@@ -28,7 +29,7 @@ router.get('/', function(req, res, next) {
   }
 })
 
-function getCity(dataArr, res){
+function getCity(dataArr, doc, res){
   var cityNameCollection = []
   var completed = 0
   dataArr.forEach(function(city) {
@@ -40,19 +41,95 @@ function getCity(dataArr, res){
             city : JSON.parse(response.raw_body).response[0].name,
             code : city.DestinationLocation,
             price : city.LowestFare})
-            if (completed === dataArr.length) {res.render('cities', { results : cityNameCollection})}
+            if (completed === dataArr.length) {
+              // google(cityNameCollection, doc)
+              console.log(doc);
+              res.render('cities', { results : cityNameCollection, origin : doc})}
         }
       })
     })
   }
 
-function sabreCall(q, res) {
+function sabreCall(q, doc, res) {
   sabreDevStudio.get(q, options, function(err, data) {
     if (err) {res.render('index', {message : 'Can\'t find destinations for this price - destination combination'})
   } else {
-      getCity(JSON.parse(data).FareInfo, res)
+      getCity(JSON.parse(data).FareInfo, doc, res)
   }})
 }
+
+// function google(cities, doc) {
+//   console.log(cities);
+//   destinations.findOne({city : doc.origin.split(',')[0]}, function (err, data) {
+//     if(err) console.log('bad DB connection');
+//     var array = [],
+//         count = data.length
+//     var result = cities.map(function (value) {
+//       var requestData = {
+//       request: {
+//         maxPrice : 'USD' + doc.maxfare,
+//         slice: [
+//           {
+//             origin: data.iata,
+//             destination: value.code,
+//             date: doc.departuredate
+//           },
+//           {
+//             origin: value.code,
+//             destination: data.iata,
+//             date: doc.returndate
+//           }
+//           ],
+//           passengers: {
+//           adultCount: 1,
+//           infantInLapCount: 0,
+//           infantInSeatCount: 0,
+//           childCount: 0,
+//           seniorCount: 0
+//           },
+//           solutions: 2,
+//           refundable: false
+//         }
+//       };
+//
+//       url = 'https://www.googleapis.com/qpxExpress/v1/trips/search?key=' + process.env.GOOGLE_KEY
+//        request({
+//           url: url,
+//           method: "POST",
+//           headers: {
+//               "content-type": "application/json",
+//           },
+//           body: JSON.stringify(requestData)
+//       }, function (err, response, body) {
+//         if (JSON.parse(body)){
+//           console.log(JSON.parse(body));
+//           array.push({city : data.city,
+//                         code : data.code,
+//                         flight : JSON.parse(body).trips.tripOption
+//                         // flight1_price : JSON.parse(body).trips.tripOption[0].price,
+//                         // flight2_price : JSON.parse(body).trips.tripOption[1].price,
+//                         // flight1_carrier : JSON.parse(body).trips.tripOption[0].slice[0].segment[0].flight,
+//                         // flight2_carrier : JSON.parse(body).trips.tripOption[1].slice[0].segment[0].flight
+//                         // flight1_carrier : JSON.parse(body).trips.tripOption[1].slice[0].segment[0].leg
+//                         // flight2_carrier : JSON.parse(body).trips.tripOption[1].slice[0].segment[0].leg
+//         //  console.log(JSON.parse(body).trips.tripOption[0].saleTotal);
+//         //  console.log(JSON.parse(body).trips.tripOption[1].saleTotal);
+//         //  console.log(JSON.parse(body).trips.tripOption[0].slice[0].segment[0]);
+//         //  console.log(JSON.parse(body).trips.tripOption[0].slice[1].segment[0]);
+//         //  console.log(JSON.parse(body).trips.tripOption[1].slice[0].segment[0]);
+//         //  console.log(JSON.parse(body).trips.tripOption[1].slice[1].segment[0]);
+//         })
+//       } else {
+//         count --
+//       }
+//       if(array.length == count){
+//         console.log(array);
+//         render('index', {result : array})
+//       }
+//     })
+//   })
+// })
+// }
 
 router.get('/places', function(req,res) {
   origin = req.query.origin.split(',')
@@ -62,7 +139,7 @@ router.get('/places', function(req,res) {
       sabreCall('/v1/shop/flights/fares?origin=' + doc.iata +
                 '&departuredate=' + req.query.departuredate +
                 '&returndate=' + req.query.returndate +
-                '&maxfare=' + req.query.maxfare, res);
+                '&maxfare=' + req.query.maxfare, req.query, res);
     } else {
       res.render('index', {message : 'We can\'t find an airoport matching your city'})
     }

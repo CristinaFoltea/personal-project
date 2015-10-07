@@ -11,14 +11,13 @@
     <form action="/places" method='get'>
         <input type="text" name="origin" id="auto-google" placeholder="Enter the location of the closest airport">
         <input type="text" name="departuredate" id="start" placeholder="Start Date">
-        <input type="text" name="returndate" id="end" placeholder="end Date">
+        <input type="text" name="returndate" id="end" placeholder="End Date">
         <input type="number" name="maxfare" placeholder="Your buget as a number">
       <input type="submit" class="button" value="Find Destinations">
     </form>
 		{{#if message}}
 				<div class="error">
 					{{message}}
-					<a href="/">OK</a>
 				</div>
 		{{/if}}
   </section>
