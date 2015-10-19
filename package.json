@@ -20,6 +20,7 @@
     "passport": "^0.2.2",
     "passport-twitter": "^1.0.3",
     "request": "^2.64.0",
+    "rsvp": "^3.1.0",
     "sabre-dev-studio": "^1.0.2",
     "serve-favicon": "~2.3.0",
     "unirest": "^0.4.2"

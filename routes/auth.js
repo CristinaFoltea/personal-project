@@ -3,7 +3,8 @@ var express = require('express'),
     router = express.Router(),
     bcrypt = require('bcryptjs'),
     db = require("monk")(process.env.MONGOLAB_URI),
-    users = db.get('users')
+    users = db.get('users'),
+    RSVP = require('rsvp');
 
 
 router.get('/logout', function(req, res) {
@@ -17,20 +18,26 @@ router.get('/login', function(req, res){
   res.render('login', {error: null})
 })
 
-router.post('/login', function(req, res, next) {
-  users.findOne({email : req.body.email}, function(err, doc) {
-    if (err) res.end('dead end')
-    if (doc === null) {
-      res.render('login', {message : "Log in failed"})
-      return
-    }
-     if (bcrypt.compareSync(req.body.password, doc.password)) {
-        res.cookie('user', {displayName : doc.fullName})
-        res.cookie('id', doc._id)
-        res.render('index', {user : {displayName : doc.fullName}, id : doc._id })
+function getUser(doc, req) {
+  var promise = new RSVP.Promise(function (resolve, reject) {
+     if (bcrypt.compareSync(req.body.password, doc.password) && doc !== null) {
+       resolve(doc)
       } else {
-        res.render('login', {message : "Log in failed"})
+       reject()
      }
+  })
+  return promise
+}
+
+router.post('/login', function(req, res, next) {
+  users.findOne({email : req.body.email}).then(function (result) {
+    return getUser(result, req)
+  }).then(function (doc) {
+    res.cookie('user', {displayName : doc.fullName})
+    res.cookie('id', doc._id)
+    res.render('index', {user : {displayName : doc.fullName}, id : doc._id })
+  }, function (error) {
+    res.render('login', {message : "Log in failed"})
   })
 })
 
@@ -38,19 +45,29 @@ router.get('/register', function(req, res, next) {
   res.render('register')
 })
 
-router.post('/register', function(req, res, next) {
+function hashing(password) {
+  var promise = new RSVP.Promise(function (resolve, reject) {
     bcrypt.genSalt(10, function(err, salt) {
-      bcrypt.hash(req.body.password, salt, function(err, hash) {
-        req.body.password = hash
-        req.body.bucketList = []
-        users.insert(req.body, function(err, doc) {
-          if (err) res.send('something went wrong')
-          res.cookie('user', {displayName : doc.fullName})
-          res.cookie('id', doc._id)
-          res.render('index', {user : {displayName : doc.fullName}, id : doc._id })
-        })
+      bcrypt.hash(password, salt, function(err, hash) {
+        resolve(hash)
       })
     })
+  })
+  return promise
+}
+
+router.post('/register', function(req, res, next) {
+  hashing(req.body.password).then(function (hash) {
+    req.body.password = hash
+    req.body.bucketList = []
+    return users.insert(req.body)
+  }).then(function (doc) {
+    res.cookie('user', {displayName : doc.fullName})
+    res.cookie('id', doc._id)
+    res.render('index', {user : {displayName : doc.fullName}, id : doc._id })
+  }, function (error) {
+    console.log(error);
+  })
 })
 
 router.use(function (req, res, next) {
