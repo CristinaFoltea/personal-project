@@ -1,6 +1,38 @@
 @media (max-width: 720px)  {
-  .input-form {
-    width: 100vw;
-    height: 50vw;
-  }
+ body {
+   font-size: 0.8em;
+   h1 {
+     font-size: 0.7em;
+   }
+   section.input-form {
+     width: 100vw;
+     margin: 0;
+     margin-top: 50px;
+     padding-left: 0;
+     padding-right: 0;
+     input[name="maxfare"], input[name="origin"],
+     input[name="email"],input[name="password"],
+     input[type='submit'], input[name="fullName"], input.button {
+       width: 90vw;
+       display: block;
+       margin-left: auto;
+       margin-right: auto;
+     }
+     input[name='departuredate'], input[name='returndate'] {
+       width: 43.8vw;
+     }
+     input[name='departuredate'] {
+      margin-left: 5vw;
+     }
+     input {
+       height: 50px;
+     }
+   }
+ }
+ header {
+   padding: 20px;
+   a.fixed {
+     width: 60px;
+   }
+ }
 }

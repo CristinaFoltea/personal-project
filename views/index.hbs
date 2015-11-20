@@ -8,11 +8,11 @@
 </ul>
 <main>
   <section class="input-form">
-    <form action="/places" method='get'>
-        <input type="text" name="origin" id="auto-google" placeholder="Enter the location of the closest airport">
-        <input type="text" name="departuredate" id="start" placeholder="Start Date">
-        <input type="text" name="returndate" id="end" placeholder="End Date">
-        <input type="number" name="maxfare" placeholder="Your buget as a number">
+    <form class="main-form" action="/places" method='get'>
+        <input type="text" name="origin" id="auto-google" placeholder="Enter the location of the closest airport" required>
+        <input type="text" name="departuredate" id="start" placeholder="Start Date" required>
+        <input type="text" name="returndate" id="end" placeholder="End Date" required>
+        <input type="number" name="maxfare" placeholder="Your buget as a number" required>
       <input type="submit" class="button" value="Find Destinations">
     </form>
 		{{#if message}}

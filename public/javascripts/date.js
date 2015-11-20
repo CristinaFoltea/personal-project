@@ -19,13 +19,3 @@ $(function() {
 $(document).ready(function(){
   $('#city-list li:nth-child(odd)').addClass('alternate');
 });
-
-
-//
-// message.addEventListener('onload', function(e){
-//     message.classList.add('visible')
-// })
-//
-// cancel.addEventListener('click', function(e){
-//   message.classList.remove('visible')
-// })

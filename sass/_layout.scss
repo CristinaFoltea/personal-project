@@ -34,11 +34,9 @@ main {
 }
 
 .error {
-  padding: 10px;
-  text-align: left;
-  color: red;
-  text-transform: uppercase;
-  font-weight: bold;
+  position: absolute;
+  z-index: 100;
+  background: white;
 }
 
 .register {
@@ -117,13 +115,12 @@ article {
      }
    }
 }
-
-section.instagram {
+div.instagram {
+  width: 94%;
+  margin-left: auto;
+  margin-right: auto;
   margin-top: 7%;
-  width: 100vw;
-  margin-left: 2.5vw;
 }
-
  article.city-list {
    margin-top: 7%;
    border-radius: 15px;

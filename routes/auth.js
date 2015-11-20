@@ -10,6 +10,9 @@ var express = require('express'),
 router.get('/logout', function(req, res) {
   res.clearCookie('user', {path : '/'})
   res.clearCookie('id', {path : '/'})
+  res.clearCookie('connect.sid', {path : '/'})
+  res.locals.id = null
+  console.log(res.locals.id);
   req.logOut()
   res.redirect('/')
 })
@@ -36,6 +39,7 @@ router.post('/login', function(req, res, next) {
     res.cookie('user', {displayName : doc.fullName})
     res.cookie('id', doc._id)
     res.render('index', {user : {displayName : doc.fullName}, id : doc._id })
+    res.redirect('/')
   }, function (error) {
     res.render('login', {message : "Log in failed"})
   })
@@ -64,6 +68,7 @@ router.post('/register', function(req, res, next) {
   }).then(function (doc) {
     res.cookie('user', {displayName : doc.fullName})
     res.cookie('id', doc._id)
+    res.redirect('/')
     res.render('index', {user : {displayName : doc.fullName}, id : doc._id })
   }, function (error) {
     console.log(error);

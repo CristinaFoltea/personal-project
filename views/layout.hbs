@@ -12,12 +12,13 @@
       {{#if user}}
       <p>
         Hello {{user.displayName }}
-        <a class='awesome' href='#'><i  onclick='change(this)' class='fa fa-chevron-left'></i></a>
-        <a id='show' class='hide' href='/users/{{id}}'>See Bucket List</a>
+        <a class='awesome anchor' href='#'><i  onclick='change(this)' class='fa fa-chevron-left'></i>
+          <a id='show' class='hide' href='/users/{{id}}'>See Bucket List</a>
+        </a>
         |
-        <a href='/auth/logout'>Logout</a>
+        <a class="fixed" href='/auth/logout'>Logout</a>
         |
-        <a href='/'>Home</a>
+        <a class="fixed" href='/'>Home</a>
       </p>
     {{else}}
       <p>

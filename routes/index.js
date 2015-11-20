@@ -8,6 +8,7 @@ var express = require('express'),
     destinations = db.get('destinations'),
     users = db.get('users'),
     options = {},
+    userForCity = null,
     sabreDevStudio = new SabreDevStudio({
       client_id:     process.env.SABRE_CLIENT_ID,
       client_secret: process.env.SABRE_SECRET,
@@ -20,7 +21,6 @@ router.get('/', function(req, res, next) {
       .header('Authorization', 'Bearer ' + req.user.token)
       .header('x-li-format', 'json')
       .end(function (response) {
-        console.log(response)
         res.cookie('user', {displayName : req.user.displayName})
         res.render('index', { user : req.user});
       })
@@ -43,8 +43,7 @@ function getCity(dataArr, doc, res){
             price : city.LowestFare})
             if (completed === dataArr.length) {
               // google(cityNameCollection, doc)
-              console.log(doc);
-              res.render('cities', { results : cityNameCollection, origin : doc})}
+              res.render('cities', { results : cityNameCollection, origin : doc, userForCity : userForCity})}
         }
       })
     })
@@ -57,6 +56,63 @@ function sabreCall(q, doc, res) {
       getCity(JSON.parse(data).FareInfo, doc, res)
   }})
 }
+
+router.get('/places', function(req,res) {
+  userForCity = res.locals.id;
+  console.log(userForCity);
+  origin = req.query.origin.split(',');
+  destinations.findOne({city : origin[0]}, function(err, doc){
+    if(err) console.log('can\'t find this data')
+    if (doc) {
+      sabreCall('/v1/shop/flights/fares?origin=' + doc.iata +
+                '&departuredate=' + req.query.departuredate +
+                '&returndate=' + req.query.returndate +
+                '&maxfare=' + req.query.maxfare, req.query, res);
+    } else {
+      res.render('index', {message : 'We can\'t find an airoport matching your city'})
+    }
+  })
+})
+
+router.get('/photos/:id', function(req, res) {
+  destination = req.params.id.replace(/\s/g, '')
+  unirest.get('https://api.instagram.com/v1/tags/' + destination + '/media/recent?client_id=' + process.env.CLIENT_ID_INSTAGRAM)
+    .type('json')
+    .end(function (response) {
+      res.render('more', {photos : JSON.parse(response.raw_body).data})
+    })
+  })
+
+router.get('/save/:id', function(req, res) {
+  if(res.locals.id){
+    users.update({_id : res.locals.id}, {$push : { bucketList : req.params.id }}, function(err, doc) {
+      if(err) res.end('error')
+      res.end()
+    })
+  } else {
+    res.redirect('/auth/login')
+  }
+})
+
+router.get('/delete/:id', function(req, res) {
+  users.update({_id : res.locals.id }, {$pull : {bucketList : req.params.id }}, function(err, doc) {
+    if(err) res.end('error')
+    res.redirect('/users/' + res.locals.id)
+  })
+})
+
+module.exports = router;
+
+
+
+
+
+
+
+
+
+
+
 
 // function google(cities, doc) {
 //   console.log(cities);
@@ -130,48 +186,3 @@ function sabreCall(q, doc, res) {
 //   })
 // })
 // }
-
-router.get('/places', function(req,res) {
-  origin = req.query.origin.split(',')
-  destinations.findOne({city : origin[0]}, function(err, doc){
-    if(err) console.log('can\'t find this data')
-    if (doc) {
-      sabreCall('/v1/shop/flights/fares?origin=' + doc.iata +
-                '&departuredate=' + req.query.departuredate +
-                '&returndate=' + req.query.returndate +
-                '&maxfare=' + req.query.maxfare, req.query, res);
-    } else {
-      res.render('index', {message : 'We can\'t find an airoport matching your city'})
-    }
-  })
-})
-
-router.get('/photos/:id', function(req, res) {
-  destination = req.params.id.replace(/\s/g, '')
-  unirest.get('https://api.instagram.com/v1/tags/' + destination + '/media/recent?client_id=' + process.env.CLIENT_ID_INSTAGRAM)
-    .type('json')
-    .end(function (response) {
-      res.render('more', {photos : JSON.parse(response.raw_body).data})
-    })
-  })
-
-router.get('/save/:id', function(req, res) {
-  console.log(res.locals.id)
-  if(res.locals.id){
-    users.update({_id : res.locals.id}, {$push : { bucketList : req.params.id }}, function(err, doc) {
-      if(err) res.end('error')
-      res.end()
-    })
-  } else {
-    res.redirect('/auth/login')
-  }
-})
-
-router.get('/delete/:id', function(req, res) {
-  users.update({_id : res.locals.id }, {$pull : {bucketList : req.params.id }}, function(err, doc) {
-    if(err) res.end('error')
-    res.redirect('/users/' + res.locals.id)
-  })
-})
-
-module.exports = router;
